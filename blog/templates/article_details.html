@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Post Detail</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}">
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<style>
+    .container{
+        margin-left:9%;
+    }
+</style>
+<body>
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Post Detail</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Here the detail of your blog post...</p>
+            </div>  
+        </div>
+    </header>
+    <br>
+
+{% if user.is_authenticated %}
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <small>By: {{ post.author }}</small><br>
+        <hr>
+        <br>
+        {{ post.content }}
+        <br><br>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+        <br><br><hr><br>
+        <form action="{% url 'like_post' post.pk %}" method="POST">{% csrf_token %}
+            {% if liked %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-danger btn-sm">Unlike</button> - {{ total_likes }} Unlikes
+            {% else %}
+                <button type="submit" name="post_id" value="{{ post.id }}" class="btn btn-primary btn-sm">Like</button> - {{ total_likes }} Likes
+            {% endif %}
+        </form><br>
+        <hr><h2>Comments...<h2>
+   {% if not post.comments.all %}
+       <h5>No Comments Yet...</h5><hr>
+       <a href="{% url 'add_comment' post.pk %}">Add One</a>
+   {% else %}
+      <a href="{% url 'add_comment' post.pk %}"><h6>Add Comment</h6></a><hr>
+       {% for comment in post.comments.all %}
+         <h6><strong>{{ comment.author }} - {{ comment.created_date}}</strong></h6>
+        <h6>{{ comment.text }}</h6><br><hr>
+       {% endfor %}  
+       <a href="{% url 'add_comment' post.pk %}"><h6>Add Comment</a><h6>
+   {% endif %}
+  <hr>
+    </div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% else %}
+    <br><br><br>
+    <center><h3>You are not allowed here! (You have to login first....)</h3></center>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endif %}
+{% include 'footer.html' %}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home Page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}">
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    <header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Delete Post</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Delete Your Post...</p>
+        </div>  
+    </div>
+</header><br/>
+    {% comment %} {% include 'navbar.html' %} {% endcomment %}
+    <!-- Header-->
+{% if user.is_authenticated %}   
+    <div class="container">
+    <center><h1>Delete Post....</h1><br></center>
+    <h3>Delete: {{ post.title }}</h3><hr>
+        <div class='form-group'>
+    <form method="POST">
+        {% csrf_token %}
+        <strong>Are You Sure?!</strong><br/><br/>
+        <button type="submit" class="btn btn-secondary">Delete Post!</button>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Back</button></a><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    </form>
+</div>
+</div>
+{% else %}
+<br><br><br><center><h3>You are not allowed here! (You have to login first....)</h3></center><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endif %}
+    {% include 'footer.html' %}
+</body>
+</html>
+{% endblock %}
