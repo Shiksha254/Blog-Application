@@ -1,6 +1,4 @@
 # Blog-Application
-# Django Blog Application with Posts and Comments
-
 Django Blog Application with Posts and Comments is a blog platform built with Django, featuring the ability to create, read, update, and delete blog posts, as well as leave comments on posts.
 
 ## Table of Contents
